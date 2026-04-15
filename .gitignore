@@ -1,0 +1,3 @@
+artifacts/best_model.joblib
+artifacts/
+.venv/
