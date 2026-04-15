@@ -53,7 +53,7 @@ def clean_features(X: pd.DataFrame) -> pd.DataFrame:
         X = X.drop(columns=["duration"])
 
     # Normalize string columns.
-    for col in X.select_dtypes(include=["object", "category"]).columns:
+    for col in X.select_dtypes(include=["object", "category", "string"]).columns:
         X[col] = X[col].astype(str).str.strip().str.lower()
 
     return X
@@ -65,7 +65,7 @@ def build_preprocessor(X: pd.DataFrame):
     ).columns.tolist()
 
     categorical_features = X.select_dtypes(
-        include=["object", "category", "bool"]
+        include=["object", "category", "bool", "string"]
     ).columns.tolist()
 
     numeric_transformer = Pipeline(
@@ -285,7 +285,7 @@ def main():
     best_model_name = comparison_df.loc[0, "model"]
     best_pipeline = trained_pipelines[best_model_name]
 
-    joblib.dump(best_pipeline, ARTIFACT_DIR / "best_model.joblib")
+    joblib.dump(best_pipeline, ARTIFACT_DIR / "best_model.joblib", compress=3)
 
     best_result = next(item for item in results if item["model"] == best_model_name)
     with open(ARTIFACT_DIR / "metrics.json", "w", encoding="utf-8") as f:
