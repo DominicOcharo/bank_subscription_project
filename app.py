@@ -54,8 +54,16 @@ CUSTOM_CSS = """
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 
 
-@st.cache_resource
+@st.cache_resource(show_spinner=False)
 def load_artifacts():
+    """Load model artifacts, training from scratch if they don't exist yet."""
+    if not MODEL_PATH.exists():
+        import train as _train
+        with st.spinner(
+            "🚀 No trained model found — training now (this takes ~2–3 minutes on first run)…"
+        ):
+            _train.main()
+
     if not MODEL_PATH.exists():
         return None, None, None, None
 
@@ -65,8 +73,6 @@ def load_artifacts():
     comparison = pd.read_csv(COMPARISON_PATH) if COMPARISON_PATH.exists() else None
     return model, metrics, summary, comparison
 
-
-model, metrics, summary, comparison = load_artifacts()
 
 st.markdown(
     """
@@ -78,8 +84,10 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
+model, metrics, summary, comparison = load_artifacts()
+
 if model is None:
-    st.error("Model files are missing. Run `python train.py` first to generate the artifacts folder.")
+    st.error("❌ Training failed. Check that all dependencies in `requirements.txt` are installed.")
     st.stop()
 
 # Summary cards
