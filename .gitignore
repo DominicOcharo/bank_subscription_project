@@ -1,3 +1,4 @@
-# artifacts/best_model.joblib
-# artifacts/
+# Model artifacts — regenerate with train.py
+*.joblib
+artifacts/best_model.joblib
 .venv/
