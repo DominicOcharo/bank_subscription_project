@@ -1,0 +1,44 @@
+{
+  "rows": 45211,
+  "features_used": [
+    "age",
+    "job",
+    "marital",
+    "education",
+    "default",
+    "balance",
+    "housing",
+    "loan",
+    "contact",
+    "day_of_week",
+    "month",
+    "campaign",
+    "pdays",
+    "previous",
+    "poutcome"
+  ],
+  "numeric_features": [
+    "age",
+    "balance",
+    "day_of_week",
+    "campaign",
+    "pdays",
+    "previous"
+  ],
+  "categorical_features": [
+    "job",
+    "marital",
+    "education",
+    "default",
+    "housing",
+    "loan",
+    "contact",
+    "month",
+    "poutcome"
+  ],
+  "positive_cases": 5289,
+  "negative_cases": 39922,
+  "positive_rate": 0.11698480458295547,
+  "best_model": "Extra Trees",
+  "dropped_feature": "duration"
+}
